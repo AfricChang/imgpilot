@@ -57,9 +57,11 @@ class ImgPilot(Photon):
         else:
             self.device = torch.device("cpu")
 
+        model_path = "models/LCM_Dreamshaper_v7"  # 或使用绝对路径
         self.base = AutoPipelineForImage2Image.from_pretrained(
-            os.environ["MODEL"],
-            torch_dtype=torch.float16 if cuda_available else torch.float32,
+            model_path,
+            torch_dtype=torch.float16
+            #variant="fp16"
         )
         self.base.safety_checker = None
         self.base.requires_safety_checker = False
