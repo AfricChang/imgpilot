@@ -1,0 +1,22 @@
+# PyInstaller build directories
+/build/
+/dist/
+
+# PyInstaller spec files
+*.spec
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Log files
+*.log
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Visual Studio Code settings
+.vscode/ 
