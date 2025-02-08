@@ -132,12 +132,6 @@ if %BUILD_GPU%==1 (
         exit /b 1
     )
 
-    :: Move spec file to OUTPUT_DIR if it exists
-    if exist "imgpilot-gpu.spec" (
-        echo Moving spec file to output directory...
-        move /y "imgpilot-gpu.spec" "%OUTPUT_DIR%"
-    )
-
     :: Copy models folder to dist directory
     echo Copying models folder to dist directory...
     if exist "%PROJECT_ROOT%\models" (
