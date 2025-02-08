@@ -8,6 +8,7 @@
 
 # testing
 /coverage
+/public/fonts
 
 # next.js
 /.next/
