@@ -6,7 +6,9 @@
     "dev": "cp -R node_modules/@excalidraw/excalidraw public && next dev",
     "build": "cp -R node_modules/@excalidraw/excalidraw public && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx,.json .",
+    "format": "prettier --write . --end-of-line lf"
   },
   "dependencies": {
     "@carbon/icons-react": "^11.30.1",
