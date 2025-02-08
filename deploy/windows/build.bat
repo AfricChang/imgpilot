@@ -100,22 +100,56 @@ if %BUILD_GPU%==1 (
     echo Debug: Running PyInstaller command...
     
     :: Execute the command with modified path format
-    python -m PyInstaller --noconfirm ^
+    python -m PyInstaller ^
+        --noconfirm ^
         --clean ^
+        --log-level=DEBUG ^
         --add-data "photon;photon" ^
-        --add-data "models/LCM_Dreamshaper_v7;models/LCM_Dreamshaper_v7" ^
-        --name imgpilot-gpu ^
-        --distpath "%OUTPUT_DIR%\dist\gpu" ^
-        --workpath "%OUTPUT_DIR%\build\gpu" ^
-        ".\photon\main.py"
-
-
-
+        --add-data "models\LCM_Dreamshaper_v7;models\LCM_Dreamshaper_v7" ^
+        --collect-all torch ^
+        --collect-all diffusers ^
+        --collect-all pydantic ^
+        --collect-all ledoc_ui ^
+        --collect-submodules ledoc_ui ^
+        --collect-data ledoc_ui ^
+        --collect-submodules pydantic ^
+        --collect-data pydantic ^
+        --collect-submodules diffusers ^
+        --collect-data diffusers ^
+        --hidden-import pydantic.deprecated.decorator ^
+        --hidden-import pydantic.deprecated ^
+        --hidden-import pydantic._internal ^
+        --hidden-import ledoc_ui ^
+        --name "imgpilot-gpu" ^
+        --distpath "%OUTPUT_DIR%dist\gpu" ^
+        --workpath "%OUTPUT_DIR%build\gpu" ^
+        "photon\main.py"
+    
     if %ERRORLEVEL% neq 0 (
         echo Error: GPU build failed with error code %ERRORLEVEL%
         echo Debug: Last command failed. Error level: %ERRORLEVEL%
         pause
         exit /b 1
+    )
+
+    :: Move spec file to OUTPUT_DIR if it exists
+    if exist "imgpilot-gpu.spec" (
+        echo Moving spec file to output directory...
+        move /y "imgpilot-gpu.spec" "%OUTPUT_DIR%"
+    )
+
+    :: Copy models folder to dist directory
+    echo Copying models folder to dist directory...
+    if exist "%PROJECT_ROOT%\models" (
+        xcopy /E /I /Y "%PROJECT_ROOT%\models" "%OUTPUT_DIR%dist\gpu\imgpilot-gpu\models"
+        if %ERRORLEVEL% neq 0 (
+            echo Error: Failed to copy models folder
+            pause
+            exit /b 1
+        )
+        echo Models folder copied successfully
+    ) else (
+        echo Warning: Models folder not found at %PROJECT_ROOT%\models
     )
 )
 
