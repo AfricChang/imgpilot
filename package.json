@@ -2,15 +2,37 @@
   "name": "imgpilot",
   "version": "0.1.0",
   "private": true,
+  "bin": "./server.js",
+  "pkg": {
+    "scripts": [
+      "next.config.js"
+    ],
+    "assets": [
+      "server.js",
+      ".next/**/*",
+      ".next/server/**/*",
+      "public/**/*",
+      ".next/server/font-manifest.json",
+      ".next/app-path-routes-manifest.json",
+      "src/**/*",
+      "components/**/*",
+      "styles/**/*"
+    ],
+    "targets": [
+      "node18-win-x64"
+    ]
+  },
   "scripts": {
     "dev": "cp -R node_modules/@excalidraw/excalidraw public && next dev",
-    "build": "cp -R node_modules/@excalidraw/excalidraw public && next build",
+    "build": "cp -R node_modules/@excalidraw/excalidraw public && node --max-old-space-size=16384 node_modules/next/dist/bin/next build",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "eslint --fix --ext .ts,.tsx,.js,.jsx,.json .",
-    "format": "prettier --write . --end-of-line lf"
+    "format": "prettier --write . --end-of-line lf",
+    "package": "pkg . --targets node18-win-x64 --output imgpilot.exe"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "@carbon/icons-react": "^11.30.1",
     "@excalidraw/excalidraw": "^0.17.6",
     "@headlessui/react": "^1.7.17",
@@ -26,26 +48,31 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cuss": "^2.2.0",
+    "express": "^5.1.0",
     "fabric": "^6.0.0-beta15",
+    "http-proxy": "^1.18.1",
     "lucide-react": "^0.292.0",
     "next": "^14.2.23",
+    "node-fetch": "^2.6.7",
     "react": "^18",
     "react-dom": "^18",
     "swr": "^2.2.4",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
-    "use-debounce": "^10.0.0"
+    "use-debounce": "^10.0.0",
+    "web-streams-polyfill": "^3.2.1"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
-    "eslint": "^8",
+    "eslint": "^8.57.1",
     "eslint-config-next": "14.0.3",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-unused-imports": "^3.0.0",
+    "pkg": "^5.8.1",
     "postcss": "^8",
     "prettier": "^3.1.0",
     "tailwindcss": "^3.3.0",
