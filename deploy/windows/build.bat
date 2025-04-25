@@ -50,7 +50,6 @@ if not exist "%OUTPUT_DIR%\build" mkdir "%OUTPUT_DIR%\build"
 :: Install dependencies if requirements.txt exists
 if exist "%PROJECT_ROOT%\requirements.txt" (
     echo Installing dependencies...
-    pip install -r "%PROJECT_ROOT%\requirements.txt" -U
 ) else (
     echo Warning: requirements.txt not found, skipping dependency installation
 )
